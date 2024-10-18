@@ -32,12 +32,13 @@
                             <% tasks.forEach((task) => { %>
                             <li class="collection-item">
                                 <%= task.task %>
-                                <a href="delete-task/<%= task.id %>" 
+                                <a href="delete-tasks/<%= task.id %>" 
                                     class="secondary-content">
-                                    <i class="material-icons">delete_forever</i></a>
+                                    <i class="material-icons">delete</i></a>
                                 </li>
                             <% }) %>
                         </ul>
+                        <!-- <input href="deleteAll" type="submit" value="Delete All" class="btn"> -->
                     </div>
                 </div>
             </div>
