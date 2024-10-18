@@ -22,6 +22,18 @@ const readFile = (filename) => {
     })
 }
 
+const writeFile = (filename, date) => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(filename, data, 'utf-8', err => {
+            if(err) {
+                console.error(err);
+                return;
+            }
+            resolve(true)
+        });
+    })
+}
+
 app.get('/', (req, res) => {
     readFile('./tasks.json')
         .then(tasks => { 
@@ -32,7 +44,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
     readFile('./tasks.json')
-        .then((tasks) => {
+        .then(tasks => {
             let index
             if(tasks.length === 0) {
                 index = 0
@@ -43,20 +55,26 @@ app.post('/', (req, res) => {
                 "id" : index,
                 "task" : req.body.task
             }
-            console.log(newTask)
             tasks.push(newTask)
-            console.log(tasks)
             data = JSON.stringify(tasks, null, 2)
             console.log(data)
-            fs.writeFile('./tasks.json', data, 'utf-8', err => {
-                if(err) {
-                    console.error(err);
-                    return;
-                } else {
-                    console.log('saved')
-                }
-                res.redirect('/')
-        });    
+            writeFile('./tasks.json', data)
+            res.redirect('/')
+    })
+})
+
+app.get('/delete-task/:taskId', (req, res) => {
+    let deletedTaskId = parseInt(req.params.taskId)
+    readFile('./tasks.json')
+    .then(tasks => {
+        tasks.forEach((task, index) => {
+            if(task.id === deletedTaskId) {
+                tasks.splice(index, 1)
+            }
+        })
+        data = JSON.stringify(tasks, null, 2)
+        writeFile('./tasks.json', data)
+        res.redirect('/')
     })
 })
 
