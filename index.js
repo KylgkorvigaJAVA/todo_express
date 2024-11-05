@@ -22,7 +22,7 @@ const readFile = (filename) => {
     })
 }
 
-const writeFile = (filename, date) => {
+const writeFile = (filename, data) => {
     return new Promise((resolve, reject) => {
         fs.writeFile(filename, data, 'utf-8', err => {
             if(err) {
@@ -90,6 +90,13 @@ app.get('/delete-task/:taskId', (req, res) => {
         writeFile('./tasks.json', data)
         res.redirect('/')
     })
+})
+
+app.get('/delete-all', (req, res) => {
+    tasks = []
+    const data = JSON.stringify(tasks, null, 2)
+    writeFile('./tasks.json', data)
+    res.redirect('/')
 })
 
 app.listen(3001, () => {

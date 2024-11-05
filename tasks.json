@@ -1,30 +1,14 @@
 [
   {
-    "id": 12,
-    "task": "Study Node"
-  },
-  {
-    "id": 13,
-    "task": "Study NEW"
-  },
-  {
-    "id": 14,
-    "task": "Study Math"
-  },
-  {
-    "id": 15,
-    "task": "Study NEW2"
-  },
-  {
-    "id": 16,
-    "task": "Study PHP"
-  },
-  {
-    "id": 17,
-    "task": "Study Math"
-  },
-  {
-    "id": 18,
+    "id": 0,
     "task": "Study HTML"
+  },
+  {
+    "id": 1,
+    "task": "Study CSS"
+  },
+  {
+    "id": 2,
+    "task": "Study JS"
   }
 ]
