@@ -99,6 +99,53 @@ app.get('/delete-all', (req, res) => {
     res.redirect('/')
 })
 
+app.get('/update-task/:taskId', (req, res) => {
+    let updateTaskId = parseInt(req.params.taskId)
+    readFile('./tasks.json')
+    .then(tasks => {
+        let updateTask
+        tasks.forEach((task) => {
+            if(task.id === updateTaskId) {
+                updateTask = task.task
+            }
+        })
+        res.render('update', {
+            updateTaskId: updateTaskId,
+            updateTask: updateTask,
+            error: null
+        })
+    })
+})
+
+app.post('/update-task', (req, res) => {
+    console.log(req.body)
+    let updateTaskId = parseInt(req.body.taskId)
+    let updateTask = req.body.task
+    let error = null
+    if(updateTask.trim().length == 0) {
+        error = 'Insert correct task data'
+        console.log(error)
+        res.render('update', {
+            updateTaskId: updateTaskId,
+            updateTask: updateTask,
+            error: error
+        })
+    } else {
+        readFile('./tasks.json')
+        .then(tasks => {
+            tasks.forEach((task, index) => {
+                if(task.id === updateTaskId) {
+                    tasks[index].task = updateTask
+                }
+            });
+            console.log(tasks)
+            const data = JSON.stringify(tasks, null, 2)
+            writeFile('./tasks.json', data)
+            res.redirect('/')
+        })
+    }
+})        
+
 app.listen(3001, () => {
     console.log('Server is started @ http://localhost:3001')
 })
